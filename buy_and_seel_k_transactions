@@ -1,0 +1,42 @@
+// Recursive helper function with memoization
+function maxProfitRec(i, k, buy, prices, dp) {
+
+    // Base case
+    if (i === prices.length || k === 0)
+        return 0;
+
+    // If already computed
+    if (dp[i][k][buy] !== -1)
+        return dp[i][k][buy];
+
+    let profit;
+
+    // If we can buy
+    if (buy === 1)
+        profit = Math.max(-prices[i] + maxProfitRec(i + 1, k, 0, prices, dp),
+                          maxProfitRec(i + 1, k, 1, prices, dp));
+
+    // If we can sell
+    else
+        profit = Math.max(prices[i] + maxProfitRec(i + 1, k - 1, 1, prices, dp),
+                          maxProfitRec(i + 1, k, 0, prices, dp));
+
+    dp[i][k][buy] = profit;
+    return profit;
+}
+
+// Find maximum profit with at most 2 transactions
+function maxProfit(prices) {
+    const n = prices.length;
+    
+    // 3D memo table for states (index, transactions, buy/sell)
+    const dp = Array.from({ length: n }, () =>
+        Array.from({ length: 3 }, () => Array(2).fill(-1))
+    );
+
+    return maxProfitRec(0, 2, 1, prices, dp);
+}
+
+// Driver Code
+const prices = [10, 22, 5, 75, 65, 80];
+console.log(maxProfit(prices));

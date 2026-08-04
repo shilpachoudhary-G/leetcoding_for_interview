@@ -15,6 +15,7 @@ bool is_valid(int r, int c, int i, j, vector<vector<int>> & grid)
   return i>=0 && i<r && j>=0 && j< c && grid[i][j]==1; 
 }
 
+vector<vector<int>> dir = {{0,1},{1,0},{-1,0},{0,-1}};
 void dfs(int i,int j ,int n,int m, vector<vector<int>>& grid, vector<vector<bool>>& visited, vector<pair<int,int>>& res) 
 {
    visited[i][j] = true; 

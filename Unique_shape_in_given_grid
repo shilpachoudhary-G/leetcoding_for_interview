@@ -1,0 +1,54 @@
+
+Q. 1100
+0000
+1100
+answar:
+ 1
+
+Q. 1 0 0 0
+    1 0 0 0
+    0 0 1 1
+anser : 2
+
+bool is_valid(int r, int c, int i, j, vector<vector<int>> & grid)
+{
+  return i>=0 && i<r && j>=0 && j< c && grid[i][j]==1; 
+}
+
+void dfs(int i,int j ,int n,int m, vector<vector<int>>& grid, vector<vector<bool>>& visited, vector<pair<int,int>>& res) 
+{
+   visited[i][j] = true; 
+   for(auto d : dir)
+   {
+      int x =  i+dir[0];
+      int y =  j+dir[1];
+      if(is_Valid(x,y,m,n,grid))
+      {
+       res.push_back({x-i,y-j});
+       dfs(x,y,n,m,grid,visited,res); 
+      }
+   }
+
+}
+int find_unique_shape_in_grid(vector<vector<int>> grid)
+{
+  int r = vector.size();
+  int c = vector[0].size();
+  set<vector<pair<int,int>>> s; 
+  vector<vector<bool>> visited; 
+  for(int i=0;i< r;i++)
+  {
+    for(int j=0;j<c;j++)
+    {
+     vector<pair<int,int>> res;
+     if(grid[i][j]==1 && !visited[i][j])
+     { 
+       res.push_back({i-i,j-j});
+       dfs(i,j,r,c,grid,visited,res);
+     }
+     if(res.size()>0)
+     s.insert(res); 
+    }
+  }
+  return s.size(); 
+}
